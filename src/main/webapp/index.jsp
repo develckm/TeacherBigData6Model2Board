@@ -8,5 +8,6 @@
     <%@include file="/headerNav.jsp"%>
 
     <h1>SPRING_BOARD 관리자 페이지</h1>
+    <h2>깃 수업</h2>
 </body>
 </html>
