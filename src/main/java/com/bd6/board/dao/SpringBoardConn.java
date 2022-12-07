@@ -15,6 +15,5 @@ public class SpringBoardConn {
         }
         return  conn;
     }
-
 }
 
