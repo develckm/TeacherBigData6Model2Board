@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/public/bootstrap/dist/css/bootstrap.css">
 <script src="<%=request.getContextPath()%>/public/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<nav class="navbar navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="<%=request.getContextPath()%>/">HOME</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
