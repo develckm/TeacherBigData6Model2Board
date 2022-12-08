@@ -55,6 +55,12 @@ public class UserServiceImp implements  UserService{
 
     @Override
     public int idCheck(String id) throws Exception {
-        return 0;
+        int idCheck=0;
+        UserDto user=userDao.findById(id);
+        System.out.println(user);
+        if(user!=null){
+            idCheck=1;
+        }
+        return idCheck;
     }
 }

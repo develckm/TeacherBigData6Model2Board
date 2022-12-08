@@ -1,0 +1,4 @@
+.form-floating .is-valid+label,
+.form-floating .is-invalid+label{
+    display: none;
+}

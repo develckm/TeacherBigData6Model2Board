@@ -11,6 +11,8 @@ import java.io.IOException;
 public class UserRegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req,resp);
     }
 
     @Override

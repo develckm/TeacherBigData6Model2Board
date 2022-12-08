@@ -44,6 +44,8 @@ class UserServiceImpTest {
     }
 
     @Test
-    void idCheck() {
+    void idCheck() throws Exception {
+        int idCheck=userService.idCheck("user9");
+        System.out.println(idCheck);
     }
 }
