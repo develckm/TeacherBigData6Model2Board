@@ -19,16 +19,18 @@ class BoardDaoImpTest {
 
     @Test
     void findPaging() throws Exception{
-        PagingDto paging=new PagingDto(2,3,"board_no","DESC");
+        PagingDto paging=new PagingDto(2,3,"title","ASC");
         System.out.println(boardDao.findPaging(paging));
     }
 
     @Test
-    void count() {
+    void count() throws Exception {
+        System.out.println(boardDao.count(null));
     }
 
     @Test
-    void findById() {
+    void findById() throws Exception{
+        System.out.println(boardDao.findById(1));
     }
 
     @Test

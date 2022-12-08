@@ -35,7 +35,7 @@ public class BoardDaoImp implements BoardDao{
     @Override
     public List<BoardDto> findPaging(PagingDto paging) throws Exception {
         List<BoardDto> boardList=null;
-        String sql="SELECT * FROM BOARD ORDER BY board_no DESC LIMIT ?,?";
+        String sql="SELECT * FROM BOARD ORDER BY "+paging.getOrderField()+" "+paging.getDirect()+" LIMIT ?,?";
         pstmt=conn.prepareStatement(sql);
         pstmt.setInt(1,paging.getStartRow());
         pstmt.setInt(2,paging.getRows());
@@ -60,12 +60,29 @@ public class BoardDaoImp implements BoardDao{
 
     @Override
     public int count(PagingDto paging) throws Exception {
-        return 0;
+        int count=0;
+        String sql="SELECT COUNT(*) cnt FROM BOARD";
+        pstmt=conn.prepareStatement(sql);
+        rs=pstmt.executeQuery();
+        if(rs.next()){
+            count=rs.getInt("cnt");
+        }
+        return count;
     }
 
     @Override
     public BoardDto findById(Integer id) throws Exception {
-        return null;
+        //BoardDto.replyList(List<ReplyDto>)를 만들어서 조인하고 파싱하세요!
+        //문제들....
+        BoardDto board=null;
+        String sql="SELECT * FROM BOARD WHERE board_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,id);
+        rs=pstmt.executeQuery();
+        while(rs.next()){
+            board=rsParseBoardDto(rs);
+        }
+        return board;
     }
 
     @Override
