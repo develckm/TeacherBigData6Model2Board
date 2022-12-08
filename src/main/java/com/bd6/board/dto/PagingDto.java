@@ -39,7 +39,8 @@ public class PagingDto {
             this.endPage=this.totalPages;
         }
         this.next= this.page != this.totalPages;
-        this.prev= this.page >= 1;
-
+        this.prev= this.page > 1;
+        this.nextPage=this.page+1;
+        this.prevPage=this.page-1;
     }
 }

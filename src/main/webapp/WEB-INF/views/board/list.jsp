@@ -13,7 +13,13 @@
     PagingDto paging=(PagingDto)request.getAttribute("paging");
 %>
     <main class="container">
-        <h1 class="my-5">게시글 리스트</h1>
+        <h1 class="mt-5 mb-4">게시글 리스트</h1>
+        <p>
+            <strong>총 레코드 수 : <%=paging.getTotalRows()%></strong>&nbsp;
+            <strong>총 페이지 수 : <%=paging.getTotalPages()%></strong>&nbsp;
+            <strong>출력되는 레코드 수 : <%=paging.getRows()%></strong>&nbsp;
+
+        </p>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
