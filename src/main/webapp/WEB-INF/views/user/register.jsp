@@ -13,7 +13,7 @@
         <h1 class="my-5">유저 등록 폼</h1>
         <form action="register.do" method="post" name="registerForm">
             <p class="form-floating">
-                <input name="userId" value="" type="text" class="form-control is-valid" placeholder="id">
+                <input name="userId" value="" type="text" class="form-control" placeholder="id">
                 <label>아이디 (아이디 4자리 이상 영어입니다.)</label>
                 <label class="valid-feedback"> 사용 가능한 아이디 </label>
                 <label id="idInvalidMsg" class="invalid-feedback">이미 사용 중인 아이디 입니다.</label>

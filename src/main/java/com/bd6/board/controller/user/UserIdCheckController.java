@@ -15,7 +15,7 @@ public class UserIdCheckController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId=req.getParameter("userId");
-        if (userId==null){
+        if (userId==null || userId.trim().equals("") || userId.length()<4){
             resp.sendError(400);
             return;
         }
