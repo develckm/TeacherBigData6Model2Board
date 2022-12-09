@@ -1,5 +1,11 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.bd6.board.dto.ReplyDto" %>
+<%@ page import="com.bd6.board.dto.PagingDto" %>
 <%@page pageEncoding="UTF-8" %>
-<%if( replyList!=null ){%>
+<%
+    List<ReplyDto> replyList= (List<ReplyDto>) request.getAttribute("replyList");;
+    PagingDto paging= (PagingDto) request.getAttribute("paging");
+%>
 <div class="list-group">
     <%for (ReplyDto reply : replyList ){%>
     <div href="#" class="list-group-item py-4">
@@ -39,4 +45,4 @@
     <%}%>
     <%@include file="pagingNav.jsp"%>
 </div>
-<%}%>
+

@@ -52,7 +52,6 @@
             <div id="replyList" class="collapse show">
                 <% List<ReplyDto> replyList=board.getReplyList();%>
                 <%@include file="/WEB-INF/views/reply/list.jsp"%>
-                <%@include file="pagingNav.jsp"%>
             </div>
         </section>
 
