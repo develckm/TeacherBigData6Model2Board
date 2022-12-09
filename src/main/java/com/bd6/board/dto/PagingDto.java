@@ -2,6 +2,8 @@ package com.bd6.board.dto;
 
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class PagingDto {
     private int page=1;
@@ -18,6 +20,7 @@ public class PagingDto {
     private int pageCount=5;//화면에 보일 페이지 수  5 6 [7] 8 9 , 1 [2] 3 4 5 ,  8 9 10 11 [12]
     private  int startPage;
     private int endPage;
+    private String queryString;
 
     public PagingDto(int page, int rows, String orderField, String direct) {
         this.page = page;
@@ -25,6 +28,20 @@ public class PagingDto {
         this.orderField = orderField;
         this.direct = direct;
         this.startRow=(page-1)*rows;
+    }
+
+    public void setQueryString(Map<String, String[]> queryMap) {
+        //{name :[val1,val2..],boardNo=[1],hobby=["낚시","그림"]}
+        //?hobby=낚시&hobby=그림
+        StringBuilder queryString= new StringBuilder();
+        for (String name :queryMap.keySet()){
+            if(!name.equals("page")){
+                for (String val : queryMap.get(name)){
+                    queryString.append(name).append("=").append(val).append("&");
+                }
+            }
+        }
+        this.queryString = queryString.toString();
     }
 
     public void setTotalRows(int totalRows) {

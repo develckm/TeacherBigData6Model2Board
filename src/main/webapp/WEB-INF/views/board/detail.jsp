@@ -1,3 +1,6 @@
+<%@ page import="com.bd6.board.dto.BoardDto" %>
+<%@ page import="com.bd6.board.dto.ReplyDto" %>
+<%@ page import="com.bd6.board.dto.PagingDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -5,6 +8,10 @@
 </head>
 <body>
     <%@include file="/headerNav.jsp"%>
+    <%
+    BoardDto board=(BoardDto) request.getAttribute("board");
+    %>
+
     <main class="container">
         <h1 class="my-5">게시글 상세 페이지</h1>
         <h2>1:N 조인 관계에서 N(reply,board_img,board_prefer)을 불러오는 방법</h2>
@@ -25,7 +32,46 @@
                 </ul>
             </li>
         </ol>
-        <p><%=request.getAttribute("board")%></p>
+        <p>게시글 번호 : <%=board.getBoardNo()%></p>
+        <p>제목 : <%=board.getTitle()%></p>
+        <p>작성자 : <%=board.getUserId()%></p>
+        <p>조회수 : <%=board.getViews()%></p>
+        <p>게시 날짜 : <%=board.getPostTime()%></p>
+        <div class="border p-3 rounded-3"><%=board.getContents()%></div>
+        <section>
+            <h2>댓글 리스트</h2>
+            <%if(board.getReplyList()!=null){%>
+                <div class="list-group">
+                    <%for (ReplyDto reply : board.getReplyList()){%>
+                    <a href="#" class="list-group-item py-4">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5><%=reply.getTitle()%></h5>
+                            <small><%=reply.getPostTime()%></small>
+                        </div>
+                        <p class="d-flex justify-content-end">
+                            <small class="pe-3">
+                                글번호 : <%=reply.getReplyNo()%>
+                            </small>
+                            <small class="pe-3">
+                                좋아요 : 5
+                            </small>
+                            <small class="pe-3">
+                                싫어요 : 3
+                            </small>
+                            <small>
+                                작성자 : <%=reply.getUserId()%>
+                            </small>
+
+                        </p>
+                        <div><%=reply.getContents()%></div>
+                    </a>
+                    <%}%>
+                </div>
+                <%PagingDto paging=(PagingDto) request.getAttribute("paging");%>
+                <%@include file="pagingNav.jsp"%>
+            <%}%>
+        </section>
+
     </main>
 </body>
 </html>
