@@ -76,31 +76,13 @@ public class BoardDaoImp implements BoardDao{
         //BoardDto.replyList(List<ReplyDto>)를 만들어서 조인하고 파싱하세요!
         //문제들....
         BoardDto board=null;
-        String sql="SELECT b.*,r.title r_title,r.* FROM BOARD  b LEFT JOIN REPLY r USING(board_no) WHERE board_no=?";
+        String sql="SELECT * FROM BOARD  WHERE board_no=?";
         pstmt=conn.prepareStatement(sql);
         pstmt.setInt(1,id);
         rs=pstmt.executeQuery();
         int index=0;
         while(rs.next()){
-            if(index++==0){
-                board=rsParseBoardDto(rs);
-                if(rs.getObject("reply_no")!=null){
-                    List<ReplyDto> replyList=new ArrayList<>();
-                    board.setReplyList(replyList);
-                }
-            }
-            if (rs.getObject("reply_no")!=null){ //댓글이 존재
-                ReplyDto reply=new ReplyDto();
-                reply.setReplyNo(rs.getInt("reply_no"));
-                reply.setBoardNo(rs.getInt("board_no"));
-                reply.setFkReplyNo((Integer) rs.getObject("fk_reply_no"));
-                reply.setPostTime(rs.getTime("post_time"));
-                reply.setTitle(rs.getString("r_title"));
-                reply.setContents(rs.getString("contents"));
-                reply.setImgPath(rs.getString("img_path"));
-                reply.setUserId(rs.getString("user_id"));
-                board.getReplyList().add(reply);
-            }
+            board=rsParseBoardDto(rs);
         }
         return board;
     }
