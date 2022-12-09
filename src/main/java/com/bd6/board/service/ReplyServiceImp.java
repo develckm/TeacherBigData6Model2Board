@@ -22,6 +22,17 @@ public class ReplyServiceImp implements ReplyService{
     @Override
     public List<ReplyDto> boardDetailList(PagingDto paging, int boardNo) throws Exception {
         List<ReplyDto> replyList=replyDao.findByBoardNo(paging,boardNo);
+        for(ReplyDto reply : replyList){
+            List<ReplyDto> rrList=replyDao.findByFkReplyNo(reply.getReplyNo());
+            reply.setReplyList(rrList);
+            if(rrList!=null){
+                for(ReplyDto rr : rrList){
+                    List<ReplyDto> rrrList=replyDao.findByFkReplyNo(rr.getReplyNo());
+                    rr.setReplyList(rrrList);
+                }
+            }
+        }
+
         int cnt=replyDao.countByBoard(boardNo);
         paging.setTotalRows(cnt);
         return replyList;

@@ -56,7 +56,7 @@ public class ReplyDaoImp implements ReplyDao{
     @Override
     public List<ReplyDto> findByBoardNo(PagingDto paging, int boardNo) throws Exception {
         List<ReplyDto> replyList=null;
-        String sql="SELECT * FROM REPLY WHERE board_no=? " +
+        String sql="SELECT * FROM REPLY WHERE board_no=? and fk_reply_no is null " +
                 "ORDER BY "+paging.getOrderField()+" "+paging.getDirect()+" LIMIT ?,?";
         pstmt=conn.prepareStatement(sql);
         pstmt.setInt(1,boardNo);
@@ -70,6 +70,25 @@ public class ReplyDaoImp implements ReplyDao{
         }
         return replyList;
     }
+
+    @Override
+    public List<ReplyDto> findByFkReplyNo( int fkReplyNo ) throws Exception {
+        List<ReplyDto> replyList=null;
+        String sql="SELECT * FROM REPLY WHERE fk_reply_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,fkReplyNo);
+        rs=pstmt.executeQuery();
+        int i=0;
+        while (rs.next()){
+            if(i++==0){ //댓글이 한개라도 있으면 만들겠다.
+                replyList=new ArrayList<ReplyDto>();
+            }
+            ReplyDto reply=rsParseReplyDto(rs);
+            replyList.add(reply);
+        }
+        return replyList;
+    }
+
     public ReplyDto rsParseReplyDto(ResultSet rs) throws Exception{
         ReplyDto reply=new ReplyDto();
         reply.setReplyNo(rs.getInt("reply_no"));

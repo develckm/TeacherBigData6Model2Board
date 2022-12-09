@@ -42,10 +42,16 @@ class ReplyDaoImpTest {
 
     @Test
     void findByBoardNo() throws Exception {
-        PagingDto paging=new PagingDto(1,5,"reply_no","DESC");
+        PagingDto paging=new PagingDto(1,10,"reply_no","ASC");
+        System.out.println(paging);
         System.out.println(replyDao.findByBoardNo(paging,1));
     }
+    @Test
+    void findByFkReplyNo() throws Exception{
+        System.out.println(replyDao.findByFkReplyNo(1)); //대댓글
 
+        System.out.println(replyDao.findByFkReplyNo(7)); //대대댓글
+    }
     @Test
     void rsParseReplyDto() {
     }

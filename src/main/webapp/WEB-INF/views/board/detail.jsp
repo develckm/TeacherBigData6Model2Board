@@ -1,6 +1,7 @@
 <%@ page import="com.bd6.board.dto.BoardDto" %>
 <%@ page import="com.bd6.board.dto.ReplyDto" %>
 <%@ page import="com.bd6.board.dto.PagingDto" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,6 +11,7 @@
     <%@include file="/headerNav.jsp"%>
     <%
     BoardDto board=(BoardDto) request.getAttribute("board");
+    PagingDto paging=(PagingDto) request.getAttribute("paging");
     %>
 
     <main class="container">
@@ -39,37 +41,19 @@
         <p>게시 날짜 : <%=board.getPostTime()%></p>
         <div class="border p-3 rounded-3"><%=board.getContents()%></div>
         <section>
-            <h2>댓글 리스트</h2>
-            <%if(board.getReplyList()!=null){%>
-                <div class="list-group">
-                    <%for (ReplyDto reply : board.getReplyList()){%>
-                    <a href="#" class="list-group-item py-4">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5><%=reply.getTitle()%></h5>
-                            <small><%=reply.getPostTime()%></small>
-                        </div>
-                        <p class="d-flex justify-content-end">
-                            <small class="pe-3">
-                                글번호 : <%=reply.getReplyNo()%>
-                            </small>
-                            <small class="pe-3">
-                                좋아요 : 5
-                            </small>
-                            <small class="pe-3">
-                                싫어요 : 3
-                            </small>
-                            <small>
-                                작성자 : <%=reply.getUserId()%>
-                            </small>
-
-                        </p>
-                        <div><%=reply.getContents()%></div>
-                    </a>
-                    <%}%>
-                </div>
-                <%PagingDto paging=(PagingDto) request.getAttribute("paging");%>
+            <h2 class="my-4">
+                <a href="#replyList" data-bs-toggle="collapse">
+                    <strong>댓글 리스트</strong>
+                    <small>
+                        <%=paging.getTotalRows()%>
+                    </small>
+                </a>
+            </h2>
+            <div id="replyList" class="collapse show">
+                <% List<ReplyDto> replyList=board.getReplyList();%>
+                <%@include file="/WEB-INF/views/reply/list.jsp"%>
                 <%@include file="pagingNav.jsp"%>
-            <%}%>
+            </div>
         </section>
 
     </main>

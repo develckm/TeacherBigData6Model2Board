@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ReplyDao extends CRUD<ReplyDto,Integer>{
     List<ReplyDto> findByBoardNo(PagingDto paging, int boardNo) throws  Exception;
+    List<ReplyDto> findByFkReplyNo(int fkReplyNo) throws  Exception;
+
     int countByBoard(int boardNo) throws Exception;
 }

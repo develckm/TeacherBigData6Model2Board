@@ -19,7 +19,7 @@ class ReplyServiceImpTest {
 
     @Test
     void boardDetailList() throws Exception {
-        PagingDto paging=new PagingDto(1,5,"reply_no","DESC");
+        PagingDto paging=new PagingDto(1,3,"reply_no","ASC");
         System.out.println(paging);
         System.out.println(replyService.boardDetailList(paging,1));
         System.out.println(paging);
