@@ -7,20 +7,19 @@
             <h5><%=reply.getTitle()%></h5>
             <small><%=reply.getPostTime()%></small>
         </div>
-        <p class="d-flex justify-content-end">
-            <small class="pe-3">
-                글번호 : <%=reply.getReplyNo()%>
-            </small>
-            <small class="pe-3">
-                좋아요 : 5
-            </small>
-            <small class="pe-3">
-                싫어요 : 3
-            </small>
-            <small>
-                작성자 : <%=reply.getUserId()%>
-            </small>
-        </p>
+        <div class="my-2 d-flex justify-content-between">
+            <div>
+                <%@include file="prefer.jsp"%>
+            </div>
+            <div>
+                <small class="pe-3">
+                    글번호 : <%=reply.getReplyNo()%>
+                </small>
+                <small>
+                    작성자 : <%=reply.getUserId()%>
+                </small>
+            </div>
+        </div>
         <div><%=reply.getContents()%></div>
         <%List<ReplyDto> rrList= reply.getReplyList();%>
         <%if(rrList!=null){%>
