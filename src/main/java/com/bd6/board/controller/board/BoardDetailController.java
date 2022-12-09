@@ -30,7 +30,8 @@ public class BoardDetailController extends HttpServlet {
             e.printStackTrace();
         }
         if(board!=null){
-
+            req.setAttribute("board",board);
+            req.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(req,resp);
         }else{
             resp.sendRedirect("list.do");
         }

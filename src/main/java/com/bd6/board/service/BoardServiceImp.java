@@ -26,7 +26,7 @@ public class BoardServiceImp implements BoardService{
 
     @Override
     public BoardDto detail(int boardNo) throws Exception {
-        return null;
+        return boardDao.findById(boardNo);
     }
 
     @Override
