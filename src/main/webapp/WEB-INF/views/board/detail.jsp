@@ -2,6 +2,7 @@
 <%@ page import="com.bd6.board.dto.ReplyDto" %>
 <%@ page import="com.bd6.board.dto.PagingDto" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.bd6.board.dto.BoardImgDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,6 +40,14 @@
         <p>작성자 : <%=board.getUserId()%></p>
         <p>조회수 : <%=board.getViews()%></p>
         <p>게시 날짜 : <%=board.getPostTime()%></p>
+        <div class="d-flex" style="overflow-x: scroll">
+            <%if(board.getBoardImgList()!=null){
+                for(BoardImgDto boardImg: board.getBoardImgList()){%>
+                    <img class="img-thumbnail"
+                         src="<%=request.getContextPath()%>/public/img/<%=boardImg.getImgPath()%>">
+            <%}
+            }%>
+        </div>
         <div class="border p-3 rounded-3"><%=board.getContents()%></div>
         <section>
             <h2 class="my-4">

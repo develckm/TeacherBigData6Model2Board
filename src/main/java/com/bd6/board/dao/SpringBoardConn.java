@@ -15,5 +15,16 @@ public class SpringBoardConn {
         }
         return  conn;
     }
+    //last_insert_id() 는 오토인크리먼트로 마지막으로 저장된 Id를 반환
+    public static int getLastInsertId() throws Exception{
+        int id=0;
+        String sql="SELECT LAST_INSERT_ID() as id";
+        Statement stmt=conn.createStatement();
+        ResultSet rs=stmt.executeQuery(sql);
+        if(rs.next()){
+            id=rs.getInt("id");
+        }
+        return  id; //저장된 내역이 없으면 0
+    }
 }
 

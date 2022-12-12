@@ -1,5 +1,6 @@
 package com.bd6.board.dao;
 
+import com.bd6.board.dto.BoardDto;
 import com.bd6.board.dto.PagingDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,11 @@ class BoardDaoImpTest {
     }
 
     @Test
-    void insert() {
+    void insert() throws Exception{
+        BoardDto board=new BoardDto();
+        board.setTitle("안녕하세요! 테스트 보드입니다.");
+        board.setContents("삭제될 테스트 입니다.");
+        board.setUserId("user1");
+        System.out.println(boardDao.insert(board));
     }
 }
