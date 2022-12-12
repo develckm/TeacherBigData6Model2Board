@@ -16,7 +16,8 @@
     %>
 
     <main class="container">
-        <h1 class="my-5">게시글 상세 페이지</h1>
+        <h1 class="mt-5">게시글 상세 페이지</h1>
+        <p class="mb-5 text-end"><a class="btn btn-outline-primary" href="modify.do?boardNo=<%=board.getBoardNo()%>">수정 폼</a></p>
         <h2>1:N 조인 관계에서 N(reply,board_img,board_prefer)을 불러오는 방법</h2>
         <ol>
             <li>
