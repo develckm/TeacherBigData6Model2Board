@@ -35,7 +35,7 @@ public class UserServiceImp implements  UserService{
 
     @Override
     public UserDto login(String id, String pw) throws Exception {
-        return null;
+        return userDao.findByUserIdAndPw(id,pw);
     }
 
     @Override

@@ -1,3 +1,4 @@
+<%@ page import="com.bd6.board.dto.UserDto" %>
 <%@ page pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/public/bootstrap/dist/css/bootstrap.css">
 <script src="<%=request.getContextPath()%>/public/bootstrap/dist/js/bootstrap.bundle.js"></script>
@@ -38,8 +39,17 @@
                     </li>
 
                 </ul>
-                <form class="d-flex mt-3" role="search">
-                </form>
+                <div class="d-flex mt-3">
+                    <%if(session.getAttribute("loginUser")==null){%>
+                        <a href="<%=request.getContextPath()%>/user/login.do">로그인</a>
+                        &nbsp;/&nbsp;
+                        <a href="<%=request.getContextPath()%>/user/register.do">회원가입</a>
+                    <%}else{
+                        UserDto loginUser=(UserDto) session.getAttribute("loginUser");
+                    %>
+                        <a href=""><%=loginUser%></a>
+                    <%}%>
+                </div>
             </div>
         </div>
     </div>
