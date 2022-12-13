@@ -36,12 +36,14 @@
             </p>
             <div class="row imgContainer mb-3">
                 <h4>이미지 삭제</h4>
-                <%for (BoardImgDto boardImg : board.getBoardImgList()){%>
+                <%if(board.getBoardImgList()!=null){
+                    for (BoardImgDto boardImg : board.getBoardImgList()){%>
                     <label class="col-12 col-md-6 col-lg-3">
                         <input type="checkbox" name="delBoardImgNo" value="<%=boardImg.getBoardImgNo()%>">
                         <img src="<%=request.getContextPath()%>/public/img/<%=boardImg.getImgPath()%>" alt="게시글 이미지" class="img-thumbnail">
                     </label>
-                <%}%>
+                <%}
+                }%>
             </div>
 
             <p class="input-group">
