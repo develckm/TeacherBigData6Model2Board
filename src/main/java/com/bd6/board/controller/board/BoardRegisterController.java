@@ -10,10 +10,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,12 +21,30 @@ import java.util.List;
 public class BoardRegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/board/register.jsp").forward(req,resp);
+        //로그인 한사람만 등록폼을 볼 수 있고
+        //로그인 하지 않은 사람은  400 or 로그인으로 이동!
+        HttpSession session=req.getSession();
+        Object loginUser_obj=session.getAttribute("loginUser");
+        if(loginUser_obj!=null){
+            req.getRequestDispatcher("/WEB-INF/views/board/register.jsp").forward(req,resp);
+        }else{
+            //resp.sendError(400);
+            session.setAttribute("msg","게시글 등록은 로그인해야 가능합니다!");
+            resp.sendRedirect(req.getContextPath()+"/user/login.do");
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        HttpSession session=req.getSession();
+        Object loginUser_obj=session.getAttribute("loginUser");
+        if(loginUser_obj==null){ //로그인 하지 않은 사람은 등록을 할 수 없다!! 400 or 다시 등록 폼
+            session.setAttribute("msg","로그인 한 사람만 게시글을 등록할 수 있습니다.");
+            resp.sendRedirect("login.do");
+            return;
+        }
+
         //form data가 blob일때만 사용가능(multipart/form-data)
         //MultipartRequest : cos의 클래스로 blob 데이터를 처리해준다.(파일이면 저장, 문자열인 인코딩 처리)
         //1.파일크기 제한 (MultipartRequest 처리)

@@ -38,19 +38,55 @@
                         </ul>
                     </li>
 
+                    <li class="d-flex mt-2 nav-item border-top">
+                        <%if(session.getAttribute("loginUser")==null){%>
+                            <a href="<%=request.getContextPath()%>/user/login.do" class="nav-link me-2">로그인</a>
+                            <a href="<%=request.getContextPath()%>/user/register.do" class="nav-link">회원가입</a>
+                        <%}else{
+                            UserDto loginUser=(UserDto) session.getAttribute("loginUser");
+                        %>
+                            <a href="" class="nav-link me-2">
+                                <%=loginUser.getUserId()%>
+                                (<%=loginUser.getName()%>)
+                            </a>
+                            <a href="<%=request.getContextPath()%>/user/logout.do" class="nav-link">
+                                로그아웃
+                            </a>
+                        <%}%>
+
+                    </li>
                 </ul>
-                <div class="d-flex mt-3">
-                    <%if(session.getAttribute("loginUser")==null){%>
-                        <a href="<%=request.getContextPath()%>/user/login.do">로그인</a>
-                        &nbsp;/&nbsp;
-                        <a href="<%=request.getContextPath()%>/user/register.do">회원가입</a>
-                    <%}else{
-                        UserDto loginUser=(UserDto) session.getAttribute("loginUser");
-                    %>
-                        <a href=""><%=loginUser%></a>
-                    <%}%>
-                </div>
             </div>
         </div>
     </div>
 </nav>
+<%
+    Object msg_str=session.getAttribute("msg");
+    if(msg_str!=null){
+%>
+<div class="modal" id="msgModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">경고 메세지!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <%=msg_str%>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const msgModal=document.getElementById("msgModal");
+new bootstrap.Modal(msgModal).show();
+</script>
+<%
+        session.removeAttribute("msg");
+    }
+%>
+
+

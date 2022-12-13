@@ -16,7 +16,15 @@
     <% BoardDto board= (BoardDto) request.getAttribute("board");%>
     <%@include file="/headerNav.jsp"%>
     <main class="container">
-        <h1 class="my-5">게시글 등록 폼</h1>
+        <h1 class="my-5">게시글 수정 폼</h1>
+        <ul>
+            <li>게시글 삭제를 구현하세요.</li>
+            <li>게시글 삭제시 게시글을 참조하는 이미지 리스트를 불러와서 이미지 파일을 삭제해야합니다.</li>
+            <li>파일이 모두 삭제되면 게시글을 참조하는 이미지 레코드도 삭제해야합니다.</li>
+            <li>게시글을 참조하는 댓글을 불러와서 댓글 이미지 파일을 삭제해야합니다.</li>
+            <li>게시글을 참조하는 댓글 레코드도 삭제해야합니다.</li>
+            <li>마지막으로 게시글을 삭제합니다. 삭제 성공시 리스트로 이동하고 실패시 게시글로 돌아옵니다.</li>
+        </ul>
         <form action="modify.do" method="post" enctype="multipart/form-data">
             <p class="form-floating">
                 <input value="<%=board.getBoardNo()%>" readonly
@@ -68,8 +76,9 @@
                 <label>내용</label>
             </div>
             <div class="mb-5 d-flex justify-content-end">
-                <button class="btn btn-outline-warning me-3" type="reset">초기화</button>
-                <button class="btn btn-outline-primary" type="submit">등록</button>
+                <a href="delete.do?boardNo=<%=board.getBoardNo()%>" class="btn btn-outline-danger me-2">삭제</a>
+                <button class="btn btn-outline-warning me-2" type="reset">초기화</button>
+                <button class="btn btn-outline-primary" type="submit">수정</button>
             </div>
         </form>
     </main>

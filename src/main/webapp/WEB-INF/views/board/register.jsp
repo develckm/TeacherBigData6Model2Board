@@ -5,6 +5,9 @@
 </head>
 <body>
     <%@include file="/headerNav.jsp"%>
+    <%
+        UserDto loginUser=(UserDto)session.getAttribute("loginUser");
+    %>
     <main class="container">
         <h1 class="my-5">게시글 등록 폼</h1>
         <h2>BLOB 과 multipart/form-data </h2>
@@ -20,11 +23,10 @@
             <li>COS : 자바 서블릿에서 BLOB 으로 넘어온 파라미터를 처리해주는 라이브러리 </li>
         </ul>
         <form action="register.do" method="post" enctype="multipart/form-data">
-
             <p class="form-floating">
-                <input value="develckm"
+                <input value="<%=loginUser.getUserId()%>"
                         type="text" name="userId" class="form-control" placeholder="title">
-                <label>글쓴이</label>
+                <label>글쓴이(<%=loginUser.getName()%>)</label>
             </p>
             <p class="form-floating">
                 <input value="타이틀 입니다~ 안녕하세요!!"
