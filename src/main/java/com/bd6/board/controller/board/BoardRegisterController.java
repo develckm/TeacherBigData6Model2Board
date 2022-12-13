@@ -1,5 +1,6 @@
 package com.bd6.board.controller.board;
 
+import com.bd6.board.dao.SpringBoardConn;
 import com.bd6.board.dto.BoardDto;
 import com.bd6.board.dto.BoardImgDto;
 import com.bd6.board.service.BoardService;
@@ -36,7 +37,7 @@ public class BoardRegisterController extends HttpServlet {
         //3.파일 형식을 확인해서서 이미지가 아닌 것은 삭제!
         String imgPath=req.getServletContext().getRealPath("/public/img"); //배포된 프로젝트의 물리적인 위치(target)
         //target : war를 배포하는 경로로 매번 초기화된다. (img 업로드를 하면 안된다.)
-        imgPath="/Users/choegyeongmin/intellij_study_workspace/TeacherBigData6Model2Board/src/main/webapp/public/img"; //(배포전 경로)
+        imgPath= SpringBoardConn.IMG_PATH;
         // 톰캣 구성편집 > Tomcat 인스턴스에 구성된 어플리케이션 배포 (체크) : 정적파일은 war로 배포하기 전 어플의 소스를 사용
         int fileSize=1024*1024*1; //1mb;
         //DefaultFileRenamePolicy : 동일한 이름의 파일이 존재하면 (1~2~10) 수를 더해서 중복을 막는다.

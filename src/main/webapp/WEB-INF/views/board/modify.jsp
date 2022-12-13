@@ -7,7 +7,6 @@
 <style>
     .imgContainer input[type=checkbox]:checked+img{
         background-color: var(--bs-danger);
-
     }
 
 </style>

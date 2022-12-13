@@ -5,6 +5,7 @@ import com.bd6.board.dto.BoardDto;
 import com.bd6.board.dto.BoardImgDto;
 import com.bd6.board.dto.PagingDto;
 
+import java.io.File;
 import java.util.List;
 
 public class BoardServiceImp implements BoardService{
@@ -32,8 +33,29 @@ public class BoardServiceImp implements BoardService{
     }
 
     @Override
-    public int modify(BoardDto board) throws Exception {
-        return 0;
+    public int modify(BoardDto board,int [] delBoardImgNos) throws Exception {
+        int modify=0;
+        modify=boardDao.updateById(board);
+        if(board.getBoardImgList()!=null){ //저장된 이미지 경로를 db 저장
+            for (BoardImgDto boardImg:board.getBoardImgList()){
+                boardImg.setBoardNo(board.getBoardNo());
+                modify+=boardImgDao.insert(boardImg);
+            }
+        }
+        int imgDel=0;
+        int imgFileDel=0;
+        String imgPath=SpringBoardConn.IMG_PATH;
+        if(delBoardImgNos!=null){ //삭제할 이미지 넘버들이 오면 db에 삭제
+            for (int boardImgNo : delBoardImgNos){
+                BoardImgDto boardImg=boardImgDao.findById(boardImgNo);
+                File imgFile=new File(imgPath+"/"+boardImg.getImgPath()); //삭제할 이미지 파일 찾기
+                imgFileDel+=(imgFile.delete())?1:0;
+                imgDel+=boardImgDao.deleteById(boardImgNo);
+            }
+        }
+        System.out.println("이미지 삭제:"+imgDel);
+        System.out.println("이미지 파일삭제:"+imgFileDel);
+        return modify;
     }
 
     @Override

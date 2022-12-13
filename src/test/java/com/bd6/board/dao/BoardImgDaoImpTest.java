@@ -32,6 +32,10 @@ class BoardImgDaoImpTest {
         boardImg.setImgPath("c.jpeg");
         System.out.println(boardImgDao.insert(boardImg));
     }
+    @Test
+    void findById() throws Exception{
+        System.out.println(boardImgDao.findById(31));
+    }
     @Order(2)
     @Test
     void findByBoardNo() throws Exception {

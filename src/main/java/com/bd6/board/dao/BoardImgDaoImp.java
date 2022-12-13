@@ -15,6 +15,23 @@ public class BoardImgDaoImp implements  BoardImgDao{
     public BoardImgDaoImp() throws Exception {
         conn=SpringBoardConn.getConn();
     }
+
+    @Override
+    public BoardImgDto findById(int boardImgNo) throws Exception {
+        BoardImgDto boardImg=null;
+        String sql="SELECT * FROM BOARD_IMG WHERE board_img_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,boardImgNo);
+        rs=pstmt.executeQuery();
+        if(rs.next()){
+            boardImg=new BoardImgDto();
+            boardImg.setBoardImgNo(rs.getInt("board_img_no"));
+            boardImg.setBoardNo(rs.getInt("board_no"));
+            boardImg.setImgPath(rs.getString("img_path"));
+        }
+        return boardImg;
+    }
+
     @Override
     public List<BoardImgDto> findByBoardNo(int boardNo) throws Exception {
         List<BoardImgDto> boardImgList=null;

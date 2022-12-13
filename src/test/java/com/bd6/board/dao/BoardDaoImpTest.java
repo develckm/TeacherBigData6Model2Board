@@ -35,12 +35,27 @@ class BoardDaoImpTest {
     }
 
     @Test
-    void deleteById() {
+    void deleteById() throws Exception {
+        System.out.println(boardDao.findById(5));
+        System.out.println(boardDao.deleteById(5));
+        System.out.println(boardDao.findById(5));
     }
 
     @Test
-    void updateById() {
+    void updateById() throws Exception {
+        BoardDto board=new BoardDto();
+        board.setBoardNo(1);
+        board.setTitle("수정 테스트 단위 테스트 중입니다!!");
+        board.setContents("내용도 수정 테스트 중입니다.");
+        System.out.println(boardDao.updateById(board));
+        System.out.println(boardDao.findById(1));
     }
+    @Test
+    void updateViews()throws Exception{
+        System.out.println(boardDao.updateViews(1));
+        System.out.println(boardDao.findById(1));
+    }
+
 
     @Test
     void insert() throws Exception{

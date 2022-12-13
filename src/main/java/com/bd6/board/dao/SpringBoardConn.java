@@ -8,6 +8,7 @@ public class SpringBoardConn {
     private static String url="jdbc:mysql://localhost:3306/SPRING_BOARD";
     private static String user="board_user";
     private static String pw="1234";
+    public final static String IMG_PATH="/Users/choegyeongmin/intellij_study_workspace/TeacherBigData6Model2Board/src/main/webapp/public/img";
     public  static Connection getConn() throws Exception {
         if(conn==null || conn.isClosed()){
             Class.forName("com.mysql.cj.jdbc.Driver");

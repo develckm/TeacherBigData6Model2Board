@@ -1,5 +1,6 @@
 package com.bd6.board.controller.board;
 
+import com.bd6.board.dao.SpringBoardConn;
 import com.bd6.board.dto.BoardDto;
 import com.bd6.board.dto.BoardImgDto;
 import com.bd6.board.service.BoardService;
@@ -48,23 +49,33 @@ public class BoardModifyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String imgPath=req.getServletContext().getRealPath("/public/img"); //배포된 프로젝트의 물리적인 위치(target)
-        imgPath="/Users/choegyeongmin/intellij_study_workspace/TeacherBigData6Model2Board/src/main/webapp/public/img"; //(배포전 경로)
+        imgPath= SpringBoardConn.IMG_PATH;
         int fileSize=1024*1024*1; //1mb;
         int modify =0; //게시글 저장성공=1 (+이미지저장)
         BoardDto board=null;
         String boardNo_str=null;
+        List<File> imgFileList=new ArrayList<File>(); //저장된 파일을 갖는 리스트
         try{
             MultipartRequest multiReq=new MultipartRequest(req,imgPath,fileSize,"UTF-8",new DefaultFileRenamePolicy());
             String title=multiReq.getParameter("title");
             String contents=multiReq.getParameter("contents");
             String userId=multiReq.getParameter("userId");
             boardNo_str=multiReq.getParameter("boardNo");
-            String delBoardImgNo[]=multiReq.getParameterValues("delBoardImgNo");
-            System.out.println(Arrays.toString(delBoardImgNo));
+            String[] delBoardImgNos_str =multiReq.getParameterValues("delBoardImgNo");
+            //?delBoardImgNo=1&delBoardImgNo=2&delBoardImgNo=10 .....
+
+            int[] delBoardImgNos=null;
+            if(delBoardImgNos_str!=null){
+                delBoardImgNos=Arrays.stream(delBoardImgNos_str)
+                        .mapToInt(Integer::parseInt)
+                        .toArray(); //{3,10,11}=>이미지 삭제 번호
+            }
             board=new BoardDto();
             board.setTitle(title);
             board.setContents(contents);
             board.setUserId(userId);
+            System.out.println(Arrays.toString(delBoardImgNos_str));
+            System.out.println(board);
             List<BoardImgDto> boardImgList=new ArrayList<BoardImgDto>();
             Enumeration<String> fileNames =multiReq.getFileNames();
             BoardService boardService=null;
@@ -79,7 +90,9 @@ public class BoardModifyController extends HttpServlet {
                         int random=(int)(Math.random()*10000);
                         //0.123124234324523452345 =>1231.24234324523452345 => 1231
                         String fileRename="board_"+System.currentTimeMillis()+"_"+random+"."+contentsTypes[1];
-                        imgFile.renameTo(new File(imgPath+"/"+fileRename));
+                        File renameFile=new File(imgPath+"/"+fileRename);
+                        imgFile.renameTo(renameFile);
+                        imgFileList.add(renameFile);
                         BoardImgDto boardImg=new BoardImgDto();
                         boardImg.setImgPath(fileRename);
                         boardImgList.add(boardImg);
@@ -87,8 +100,9 @@ public class BoardModifyController extends HttpServlet {
                 }
             }//img 저장 끝
             board.setBoardImgList(boardImgList);
+            board.setBoardNo(Integer.parseInt(boardNo_str));
             boardService=new BoardServiceImp();
-            modify =boardService.modify(board);
+            modify =boardService.modify(board,delBoardImgNos);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -96,6 +110,7 @@ public class BoardModifyController extends HttpServlet {
         if(modify >0){ //성공시 리스트
             resp.sendRedirect("detail.do?boardNo="+boardNo_str);
         }else { //실패시 다시 폼으로 이동
+            imgFileList.stream().forEach(File::delete);  //저장했던 이미지 삭제
             resp.sendRedirect("modify.do?boardNo="+boardNo_str);
         }
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BoardService {
     int register(BoardDto board) throws  Exception;
-    int modify(BoardDto board) throws  Exception;
+    int modify(BoardDto board,int [] delBoardImgNos) throws  Exception;
     BoardDto detail(int boardNo) throws Exception;
     List<BoardDto> list(PagingDto paging) throws Exception;
 }

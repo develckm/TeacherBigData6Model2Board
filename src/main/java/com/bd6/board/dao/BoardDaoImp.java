@@ -87,12 +87,24 @@ public class BoardDaoImp implements BoardDao{
 
     @Override
     public int deleteById(Integer id) throws Exception {
-        return 0;
+        int delete=0;
+        String sql="DELETE FROM BOARD WHERE board_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,id);
+        delete=pstmt.executeUpdate();
+        return delete;
     }
 
     @Override
     public int updateById(BoardDto dto) throws Exception {
-        return 0;
+        int update=0;
+        String sql="UPDATE BOARD SET title=?,contents=? WHERE board_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setString(1,dto.getTitle());
+        pstmt.setString(2,dto.getContents());
+        pstmt.setInt(3,dto.getBoardNo());
+        update=pstmt.executeUpdate();
+        return update;
     }
 
     @Override
@@ -105,5 +117,15 @@ public class BoardDaoImp implements BoardDao{
         pstmt.setString(3,dto.getUserId());
         insert=pstmt.executeUpdate();
         return insert;
+    }
+
+    @Override
+    public int updateViews(int boardNo) throws Exception {
+        int update=0;
+        String sql="UPDATE BOARD SET views=views+1 WHERE board_no=?";
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,boardNo);
+        update=pstmt.executeUpdate();
+        return update;
     }
 }
