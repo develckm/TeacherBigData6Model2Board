@@ -35,11 +35,17 @@ public class UserLoginController extends HttpServlet {
         }catch (Exception e){
             e.printStackTrace();
         }
-        //로그인 성공 main
+        //로그인 성공 main or 요청했던 전 페이지 session.reqUrl
         if(loginUser!=null){
             HttpSession session =req.getSession();
             session.setAttribute("loginUser",loginUser);
-            resp.sendRedirect(req.getContextPath()+"/");
+            Object reqUrl=session.getAttribute("reqUrl");
+            if(reqUrl==null){
+                resp.sendRedirect(req.getContextPath()+"/");
+            }else{
+                session.removeAttribute("reqUrl");
+                resp.sendRedirect((String) reqUrl);
+            }
         }else{
             resp.sendRedirect("login.do");
         }
